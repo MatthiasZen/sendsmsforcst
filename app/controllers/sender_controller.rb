@@ -9,7 +9,10 @@ class SenderController < ApplicationController
     phone = params["phone"].gsub(/[" "]/, '')
     first_name = params["name"]
     last_name = params["family"]
-    cst_number = params["csm"]
+    csm_infos = params["csm"].split(",")
+    cst_name = csm_infos.first
+    cst_number = csm_infos.last
+
     if phone.length.between? 10, 12
       add_region = phone.first.gsub(/["0"]/, '+33') + phone[1..11]
 
@@ -18,15 +21,15 @@ class SenderController < ApplicationController
       case step_of_reconvering
       when 1
         if phone.first == "+"
-          api.call('sms.send', 'Zenchef', "#{phone}", "Bonjour, j’ai tenté de vous joindre concernant votre formation. Pourriez-vous me rappeler au #{cst_number} ? Merci d’avance. Zenchef", nil)
+          api.call('sms.send', 'Zenchef', "#{phone}", "Bonjour, j’ai tenté de vous joindre concernant votre formation. Pourriez-vous me rappeler au #{cst_number} ? Merci. #{cst_name} de Zenchef", nil)
         else
-          api.call('sms.send', 'Zenchef', "#{add_region}", "Bonjour, j’ai tenté de vous joindre concernant votre formation. Pourriez-vous me rappeler au #{cst_number} ? Merci d’avance. Zenchef", nil)
+          api.call('sms.send', 'Zenchef', "#{add_region}", "Bonjour, j’ai tenté de vous joindre concernant votre formation. Pourriez-vous me rappeler au #{cst_number} ? Merci. #{cst_name} de Zenchef", nil)
         end
       when 2
         if phone.first == "+"
-          api.call('sms.send', 'Zenchef', "#{phone}", "Bonjour, j’ai tenté de vous joindre concernant la mise en place de votre service. Pourriez-vous me rappeler au #{cst_number} ? Merci d’avance. Zenchef", nil)
+          api.call('sms.send', 'Zenchef', "#{phone}", "Bonjour, j’ai tenté de vous joindre pour la mise en place de votre service. Pouvez-vous me rappeler au #{cst_number} ? Merci. #{cst_name} de Zenchef", nil)
         else
-          api.call('sms.send', 'Zenchef', "#{add_region}", "Bonjour, j’ai tenté de vous joindre concernant la mise en place de votre service. Pourriez-vous me rappeler au #{cst_number} ? Merci d’avance. Zenchef", nil)
+          api.call('sms.send', 'Zenchef', "#{add_region}", "Bonjour, j’ai tenté de vous joindre pour la mise en place de votre service. Pouvez-vous me rappeler au #{cst_number} ? Merci. #{cst_name} de Zenchef", nil)
         end
       end
 
