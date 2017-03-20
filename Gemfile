@@ -36,9 +36,12 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'callr', '~> 1.0'
 gem 'figaro', '~> 1.1', '>= 1.1.1'
+gem 'bootstrap-sass', '~> 3.3.6'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'better_errors', '~> 2.1', '>= 2.1.1'
+  gem 'binding_of_caller', '~> 0.7.2'
 end
 
 group :development do
